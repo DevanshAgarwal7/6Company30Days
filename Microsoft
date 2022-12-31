@@ -1,0 +1,33 @@
+Question 1 : /* You are given an array of strings tokens that represents an arithmetic expression in a Reverse Polish Notation.*/
+LeetCode Link : https://leetcode.com/problems/evaluate-reverse-polish-notation/description/
+
+class Solution {
+    public int evalRPN(String[] tokens) {
+        Stack<Integer> st = new Stack<Integer>();
+        for(String str : tokens){
+            if("+-*/".contains(str)){
+                int evaluate = solve(st.pop(),st.pop(),str);
+                st.push(evaluate);
+            }
+            else{
+                st.push(Integer.parseInt(str));
+            }
+        }
+        return st.peek();
+    }
+    private int solve(int b, int a, String op){
+        if("+".equals(op)){
+            return a+b;
+        }
+        if("-".equals(op)){
+            return a-b;
+        }
+        if("*".equals(op)){
+            return a*b;
+        }
+        if(b!=0){
+            return a/b;
+        }
+        return -1; //not reach
+    }
+}
