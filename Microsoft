@@ -1,4 +1,6 @@
-Question 1 : /* You are given an array of strings tokens that represents an arithmetic expression in a Reverse Polish Notation.*/
+Date - 1/1/23
+
+Question 1 :- /* You are given an array of strings tokens that represents an arithmetic expression in a Reverse Polish Notation.*/
 LeetCode Link : https://leetcode.com/problems/evaluate-reverse-polish-notation/description/
 
 class Solution {
@@ -29,5 +31,63 @@ class Solution {
             return a/b;
         }
         return -1; //not reach
+    }
+}
+
+Question 2 : /* Combination Sum with a twist. */
+LeetCode Link : https://leetcode.com/problems/combination-sum-iii/description/
+
+class Solution {
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<Integer> subList = new ArrayList<Integer>();
+        List<List<Integer>> ans = new ArrayList<>();
+        solve(1,9,k,n,subList,ans);
+        return ans;
+    }
+    private void solve(int start, int end, int k, int n, 
+    List<Integer> subList, List<List<Integer>>ans)
+    {
+        //Base Case 1
+        if(subList.size()==k && n==0){
+            ans.add(new ArrayList<Integer>(subList));
+            return;
+        }
+        
+        //Base Case 2
+        if(subList.size()>k){
+            return;
+        }
+
+        for(int i=start;i<=end;i++){
+            
+            subList.add(i);
+            solve(i+1,end,k,n-i,subList,ans);
+            //BackTracing
+            subList.remove(subList.size()-1);
+            
+        }
+    }
+}
+
+Question 3 : /* Bulls and Cows */
+LeetCode Link : https://leetcode.com/problems/bulls-and-cows/description/
+
+class Solution {
+    public String getHint(String secret, String guess) {
+    int bulls = 0;
+    int cows = 0;
+    int[] numbers = new int[10];
+    for (int i = 0; i<secret.length(); i++) {
+        int s = Character.getNumericValue(secret.charAt(i));
+        int g = Character.getNumericValue(guess.charAt(i));
+        if (s == g) bulls++;
+        else {
+            if (numbers[s] < 0) cows++;
+            if (numbers[g] > 0) cows++;
+            numbers[s] ++;
+            numbers[g] --;
+        }
+    }
+    return bulls + "A" + cows + "B";
     }
 }
